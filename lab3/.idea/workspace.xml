@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c17867db-8d10-4d87-88f2-49cb2e021e3c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../lab5/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab5/1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab5/2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab5/3.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/0.py" beforeDir="false" afterPath="$PROJECT_DIR$/0.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Grafik.py" beforeDir="false" afterPath="$PROJECT_DIR$/Grafik.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grafik2.py" beforeDir="false" afterPath="$PROJECT_DIR$/grafik2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab5/top.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../lab5/top.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,13 +18,13 @@
     <session id="2073365628">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
-          <entry key="project.open.time.0" value="1" />
+          <entry key="project.closed" value="7" />
+          <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="6" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -39,12 +39,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="4186" />
+          <entry key="py" value="4539" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="4186" />
+          <entry key="Python" value="4539" />
         </counts>
       </usages-collector>
     </session>
@@ -54,7 +54,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lol.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="357">
               <caret line="22" selection-start-line="22" selection-end-line="22" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -78,16 +78,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/0.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="10" lean-forward="true" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
+            <state relative-caret-position="748">
+              <caret line="44" column="37" selection-start-line="27" selection-end-line="44" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1003">
+            <state relative-caret-position="986">
               <caret line="59" column="13" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -96,11 +96,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Grafik.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="15" selection-end-column="37" />
+            <state relative-caret-position="372">
+              <caret line="170" column="27" lean-forward="true" selection-start-line="170" selection-start-column="27" selection-end-line="170" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -108,8 +111,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grafik2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2159">
-              <caret line="128" column="35" selection-start-line="128" selection-end-line="128" selection-end-column="35" />
+            <state relative-caret-position="1870">
+              <caret line="111" column="10" selection-end-line="111" selection-end-column="10" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -145,12 +148,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/venv/laba4.py" />
-        <option value="$PROJECT_DIR$/Grafik.py" />
-        <option value="$PROJECT_DIR$/grafik2.py" />
         <option value="$PROJECT_DIR$/lol.py" />
         <option value="$PROJECT_DIR$/1_1png.py" />
-        <option value="$PROJECT_DIR$/0.py" />
         <option value="$PROJECT_DIR$/1.py" />
+        <option value="$PROJECT_DIR$/0.py" />
+        <option value="$PROJECT_DIR$/grafik2.py" />
+        <option value="$PROJECT_DIR$/Grafik.py" />
       </list>
     </option>
   </component>
@@ -182,7 +185,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lab5" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
@@ -197,7 +200,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.1">
+  <component name="RunManager" selected="Python.Grafik">
     <configuration name="0" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="lab3" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -334,10 +337,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.grafik2" />
+        <item itemvalue="Python.0" />
         <item itemvalue="Python.1" />
         <item itemvalue="Python.1_1png" />
-        <item itemvalue="Python.0" />
-        <item itemvalue="Python.grafik2" />
         <item itemvalue="Python.1_5_2" />
       </list>
     </recent_temporary>
@@ -403,7 +406,7 @@
     <entry file="file://$PROJECT_DIR$/venv/laba4.py" />
     <entry file="file://$PROJECT_DIR$/lol.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="357">
           <caret line="22" selection-start-line="22" selection-end-line="22" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -421,17 +424,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Grafik.py">
+    <entry file="file://$PROJECT_DIR$/0.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="15" selection-end-column="37" />
+        <state relative-caret-position="748">
+          <caret line="44" column="37" selection-start-line="27" selection-end-line="44" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="986">
+          <caret line="59" column="13" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grafik2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2159">
-          <caret line="128" column="35" selection-start-line="128" selection-end-line="128" selection-end-column="35" />
+        <state relative-caret-position="1870">
+          <caret line="111" column="10" selection-end-line="111" selection-end-column="10" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -448,19 +461,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/0.py">
+    <entry file="file://$PROJECT_DIR$/Grafik.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="10" lean-forward="true" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1003">
-          <caret line="59" column="13" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
+        <state relative-caret-position="372">
+          <caret line="170" column="27" lean-forward="true" selection-start-line="170" selection-start-column="27" selection-end-line="170" selection-end-column="27" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
