@@ -44,7 +44,7 @@ class ball():
             self.y + self.r
         )
 
-    def move(self):
+    def Move(self):
         """Переместить мяч по прошествии единицы времени.
 
         Метод описывает перемещение мяча за один кадр перерисовки. То есть, обновляет значения
@@ -90,7 +90,7 @@ class ball():
             return False
 
     def hittest(self, obj):
-        if math.sqrt(abs(self.x - obj.pos_x()) ** 2 + abs(self.y - obj.pos_y()) ** 2) < self.r + obj.radius():
+        if math.sqrt(abs(self.x - obj.GetPosX()) ** 2 + abs(self.y - obj.GetPosY()) ** 2) < self.r + obj.GetRadius():
             return True
 
 
@@ -117,6 +117,7 @@ class gun():
         self.an = math.atan((event.y - new_ball.y) / (event.x - new_ball.x))
         new_ball.vx = self.f2_power * math.cos(self.an)
         new_ball.vy = - self.f2_power * math.sin(self.an)
+        new_ball.r = 3 + self.f2_power
         balls += [new_ball]
         self.f2_on = 0
         self.f2_power = 10
@@ -134,7 +135,7 @@ class gun():
                     450 + max(self.f2_power, 20) * math.sin(self.an)
                     )
 
-    def power_up(self):
+    def PowerUp(self):
         if self.f2_on:
             if self.f2_power < 100:
                 self.f2_power += 1
@@ -150,16 +151,16 @@ class target():
         self.vy = rnd(-4, 4)
         self.id = canv.create_oval(0, 0, 0, 0)
         self.id_points = canv.create_text(30, 30, text='', font='28')
-        self.new_target()
+        self.NewTarget()
 
-    def move(self):
+    def Move(self):
         if self.y - self.r < 50:
             self.vy = - self.vy
         if self.y + self.r >= 500:
             self.vy = -self.vy
         self.y -= self.vy
 
-    def draw_target(self):
+    def DrawTarget(self):
         self.id = canv.create_oval(
             self.x - self.r,
             self.y - self.r,
@@ -168,10 +169,10 @@ class target():
             fill=self.color
         )
 
-    def delete_target(self):
+    def DeleteTarget(self):
         canv.delete(self.id)
 
-    def new_target(self):
+    def NewTarget(self):
         """ Инициализация новой цели. """
         x = self.x = rnd(600, 780)
         y = self.y = rnd(100, 400)
@@ -180,13 +181,13 @@ class target():
         canv.coords(self.id, x - r, y - r, x + r, y + r)
         canv.itemconfig(self.id, fill=color)
 
-    def pos_x(self):
+    def GetPosX(self):
         return self.x
 
-    def pos_y(self):
+    def GetPosY(self):
         return self.y
 
-    def radius(self):
+    def GetRadius(self):
         return self.r
 
     def hit(self, points=1):
@@ -194,10 +195,10 @@ class target():
         canv.coords(self.id, -10, -10, -10, -10)
         self.points += points
 
-    def score(self):
+    def GetScore(self):
         return self.points
 
-    def id_points_lol(self):
+    def GetIDPoints(self):
         return self.id_points
 
 
@@ -211,28 +212,26 @@ balls = []
 
 def new_game(event=''):
     global gun, t1, screen1, balls, bullet
-    t1.new_target()
-    t2.new_target()
-    t1.delete_target()
-    t2.delete_target()
+    t1.NewTarget()
+    t2.NewTarget()
+    t1.DeleteTarget()
+    t2.DeleteTarget()
     bullet = 0
     canv.bind('<Button-1>', g1.fire2_start)
     canv.bind('<ButtonRelease-1>', g1.fire2_end)
     canv.bind('<Motion>', g1.targetting)
-
-    z = 0.0001
     t1.live = 1
     t2.live = 1
     while t1.live or t2.live or balls != []:
         delete = []
-        t1.move()
-        t2.move()
+        t1.Move()
+        t2.Move()
         if t1.live != 0:
-            t1.draw_target()
+            t1.DrawTarget()
         if t2.live != 0:
-            t2.draw_target()
+            t2.DrawTarget()
         for i in range(len(balls)):
-            balls[i].move()
+            balls[i].Move()
             if balls[i].hittest(t2) and t2.live:
                 t2.live = 0
                 t2.hit()
@@ -243,7 +242,7 @@ def new_game(event=''):
                 canv.bind('<Button-1>', "")
                 canv.bind('<ButtonRelease-1>', "")
                 canv.itemconfig(screen1, text='Вы уничтожили цели за ' + str(bullet) + ' выстрелов')
-                canv.itemconfig(t1.id_points_lol(), text=t1.score())
+                canv.itemconfig(t1.GetIDPoints(), text=t1.GetScore())
             balls[i].draw_ball()
             if balls[i].ball_stop() == True:
                 balls[i].delete_ball()
@@ -255,10 +254,10 @@ def new_game(event=''):
         time.sleep(0.03)
         for b in balls:
             b.delete_ball()
-        t1.delete_target()
-        t2.delete_target()
+        t1.DeleteTarget()
+        t2.DeleteTarget()
         g1.targetting()
-        g1.power_up()
+        g1.PowerUp()
 
     canv.delete(gun)
     canv.itemconfig(screen1, text='')
