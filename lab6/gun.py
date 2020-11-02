@@ -79,6 +79,28 @@ class ball():
     def delete_ball(self):
         canv.delete(self.id)
 
+    def Troechka(self, t):
+        ball1 = ball()
+        ball1.x = t.GetPosX()
+        ball1.y = t.GetPosY()
+        ball1.vy = 10
+        ball1.vx = -10
+        ball2 = ball()
+        ball2.x = t.GetPosX()
+        ball2.y = t.GetPosY()
+        ball2.vy = 10
+        ball2.vx = 0
+        ball3 = ball()
+        ball3.x = t.GetPosX()
+        ball3.y = t.GetPosY()
+        ball3.vy = 10
+        ball3.vx = 10
+        balls.append(ball1)
+        balls.append(ball2)
+        balls.append(ball3)
+
+
+
     def ball_stop(self):
         if self.vx == 0 and self.vy == 0:
             if self.live == 0:
@@ -201,6 +223,32 @@ class target():
     def GetIDPoints(self):
         return self.id_points
 
+class Shrapnel(ball, target):
+
+    def Troechka(self, t):
+        ball1 = ball()
+        ball1.x = t.GetPosX()
+        ball1.y = t.GetPosY()
+        ball1.vy = 10
+        ball1.vx = -10
+        ball2 = ball()
+        ball2.x = t.GetPosX()
+        ball2.y = t.GetPosY()
+        ball2.vy = 10
+        ball2.vx = 0
+        ball3 = ball()
+        ball3.x = t.GetPosX()
+        ball3.y = t.GetPosY()
+        ball3.vy = 10
+        ball3.vx = 10
+        ball1.delete_ball()
+        ball2.delete_ball()
+        ball3.delete_ball()
+        shrapneles.append(ball1)
+        shrapneles.append(ball2)
+        shrapneles.append(ball3)
+
+
 
 t1 = target()
 t2 = target()
@@ -208,6 +256,7 @@ screen1 = canv.create_text(400, 300, text='', font='28')
 g1 = gun()
 bullet = 0
 balls = []
+shrapneles = []
 
 
 def new_game(event=''):
@@ -222,8 +271,9 @@ def new_game(event=''):
     canv.bind('<Motion>', g1.targetting)
     t1.live = 1
     t2.live = 1
-    while t1.live or t2.live or balls != []:
-        delete = []
+    while t1.live or t2.live or balls != [] or shrapneles != []:
+        del_balls = []
+        del_shrapneles = []
         t1.Move()
         t2.Move()
         if t1.live != 0:
@@ -235,9 +285,21 @@ def new_game(event=''):
             if balls[i].hittest(t2) and t2.live:
                 t2.live = 0
                 t2.hit()
+                s = Shrapnel()
+                s.delete_ball()
+                s.Troechka(t2)
+                del_balls.append(i)
+                balls[i].delete_ball()
+
             if balls[i].hittest(t1) and t1.live:
                 t1.live = 0
                 t1.hit()
+                s = Shrapnel()
+                s.delete_ball()
+                s.Troechka(t1)
+                del_balls.append(i)
+                balls[i].delete_ball()
+
             if t1.live == 0 and t2.live == 0:
                 canv.bind('<Button-1>', "")
                 canv.bind('<ButtonRelease-1>', "")
@@ -246,14 +308,45 @@ def new_game(event=''):
             balls[i].draw_ball()
             if balls[i].ball_stop() == True:
                 balls[i].delete_ball()
-                delete.append(i)
-        for i in delete:
+                del_balls.append(i)
+            if ( t1.live  and balls[i].hittest(t1) ) or (t2.live and balls[i].hittest(t2)) == True:
+                balls[i].delete_ball()
+                del_balls.append(i)
+
+        for i in del_balls:
+            balls[i].delete_ball()
             del balls[i]
 
+
+        for i in range(len(shrapneles)):
+            shrapneles[i].Move()
+            if shrapneles[i].hittest(t2) and t2.live != 0:
+                t2.live = 0
+                t2.hit()
+                s = Shrapnel()
+                s.delete_ball()
+                s.Troechka(t2)
+
+            if shrapneles[i].hittest(t1) and t1.live != 0:
+                t1.live = 0
+                t1.hit()
+                s = Shrapnel()
+                s.delete_ball()
+                s.Troechka(t1)
+
+            shrapneles[i].draw_ball()
+            if shrapneles[i].ball_stop() == True:
+                shrapneles[i].delete_ball()
+                del_shrapneles.append(i)
+
+        for i in range(len(del_shrapneles)):
+            del shrapneles[del_shrapneles[i]-i]
         canv.update()
         time.sleep(0.03)
         for b in balls:
             b.delete_ball()
+        for s in shrapneles:
+            s.delete_ball()
         t1.DeleteTarget()
         t2.DeleteTarget()
         g1.targetting()
