@@ -11,7 +11,7 @@ pygame.init()
 
 nickname = input("Nickname ")
 
-time = 10 #время длительности игры в секундах
+time = 10  # время длительности игры в секундах
 FPS = 60
 screen_width = 1200
 screen_height = 800
@@ -146,20 +146,20 @@ def move_squares(square_pos, image):  # Функция перемещает кв
             square_pos[i][5] = - square_pos[i][5]
             square_pos[i][5] += square_pos[i][5] * 0.2 - 0.01
 
-
         rect(screen, square_pos[i][3], (square_pos[i][0], square_pos[i][1], square_pos[i][2], square_pos[i][2]))
         scr = pygame.Surface([square_pos[i][2], square_pos[i][2]], pygame.SRCALPHA)
-        scr.blit(image,(0,0) )
+        scr.blit(image, (0, 0))
 
-        screen.blit(scr, (square_pos[i][0],square_pos[i][1]))
+        screen.blit(scr, (square_pos[i][0], square_pos[i][1]))
         new_image = pygame.transform.scale(image, (square_pos[i][2], square_pos[i][2]))
-        screen.blit(new_image,(square_pos[i][0],square_pos[i][1] ))
+        screen.blit(new_image, (square_pos[i][0], square_pos[i][1]))
+
 
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = 0
 
-while finished < time*FPS:
+while finished < time * FPS:
     clock.tick(FPS)
     print(balls_pos)
     for event in pygame.event.get():
@@ -175,14 +175,14 @@ while finished < time*FPS:
     move_squares(square_pos, image)
     pygame.display.update()
     screen.fill(BLACK)
-    finished +=1
+    finished += 1
 
-file.write(nickname + " " + str(score)+ '\n')
+file.write(nickname + " " + str(score) + '\n')
 file.close()
 pygame.quit()
 
 file = open('top.txt', 'r')
-data =[]
+data = []
 
 while True:
     a = file.readline()
@@ -194,10 +194,8 @@ for i in range(len(data)):
     a = a.split()
     data[i] = a
 
-
 print(data)
 file.close()
-
 
 
 def sort_col(i):
@@ -210,4 +208,4 @@ file.close()
 
 file = open('top.txt', 'w')
 for i in range(len(data)):
-    file.write(str(data[i][0]) + " " + str(data[i][1]) + "\n" )
+    file.write(str(data[i][0]) + " " + str(data[i][1]) + "\n")
