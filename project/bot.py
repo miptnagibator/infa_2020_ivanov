@@ -8,6 +8,9 @@ from vk_api.utils import get_random_id
 token = "31708ce0fc77f37c8e4b0ec34e8a942f965d5cb3fb421ef46df05f41c52ec261f416e390c99c9f0d24cd0"
 zodiac = ["Рак", "Лев", "Дева", "Рыбы", "Стрелец", "Козерог", "Овен", "Скорпион", "Водолей", "Весы", "Близнецы",
           "Телец"]
+week1 = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
+week2 = ['понедельник', 'вторник', 'среду', 'четверг', 'пятницу', 'субботу', 'воскресенье']
+
 
 # подключаемся к сообществу
 vk_session = vk_api.VkApi(token=token)
@@ -69,6 +72,59 @@ def send_pogoda():
         message=pogod(user_sent))
 
 
+def check_timetable(user_message):
+    list = user_message.split()
+    bool = 0
+    for i in range(len(list)):
+        if list[i].lower() == 'расписание':
+            bool+=1
+            for j in range(len(list)):
+                if list[j].lower() in week1:
+                    day = list[j].lower()
+                    print("True")
+                    bool +=1
+                    break
+                if list[j].lower() in week2:
+                    day = list[j].lower()
+                    print("True")
+                    bool +=1
+                    break
+    if bool == 2:
+        return day
+    if bool == 1:
+        return True
+    if bool == 0:
+        return False
+
+
+
+
+def return_timetable(request, file_with_timetable):
+    timetable = []
+    day = 0
+    string = ""
+    if str(type(request)) == "<class 'str'>":
+        for i in range(len(week1)):
+            if request == week1[i]:
+                day = i
+        for i in range(len(week2)):
+            if request == week2[i]:
+                day = i
+        with open(file_with_timetable, 'r', encoding="utf-8") as file:
+            for line in file:
+                a = line.split(",")
+                timetable.append(a)
+            for i in range(len(timetable[day])):
+                string += timetable[day][i] + "\n"
+            vk.messages.send(
+                user_id=event.obj.from_id,
+                random_id=get_random_id(),
+                message= string)
+    if request == True:
+        print("Чтобы бот выдал расписание, в сообщении должно быть слово слово расписание и день недели")
+    if request == False:
+        pass
+
 def sport():
     page = requests.get("https://www.sport-express.ru/live/yesterday/football")  # загрузим веб-страницу по ссылке
     soup = BeautifulSoup(page.text, 'html.parser')
@@ -111,8 +167,9 @@ for event in longpoll.listen():  # вечно ждем новых сообщен
                     send_pogoda()
                 elif user_sent == "Спорт":
                     sport()
+                elif check_timetable(user_sent) != False:
+                    return_timetable(check_timetable(user_sent), 'timetable.txt')
                 else:
-                    vk.messages.send(
-                        user_id=event.obj.from_id,
-                        random_id=get_random_id(),
-                        message="Нічого не зрозуміло. Повтори будь ласка")  # иначе вернем сообщение назад
+                    vk.messages.send(user_id=event.obj.from_id,
+                                     random_id=get_random_id(),
+                                     message="Нічого не зрозуміло. Повтори будь ласка")  # иначе вернем сообщение назад
