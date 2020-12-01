@@ -1,6 +1,24 @@
-s = input()
-a = int(input())
-b = int(input())
+number = input("Число:")
+old_system = int(input("Старая система: "))
+new_system = int(input("Новая система: "))
+
+
+class number():
+    def __init__(self):
+        self.num = 0
+        self.base = 0
+
+    def plus(self, object):
+        pass
+
+    def minus(self, object):
+        pass
+
+    def mult(self, object):
+        pass
+
+    def divide(self, object):
+        pass
 
 
 def half1(x, b):
@@ -23,4 +41,4 @@ def convert(s, a, b):
     return half1(half2(s, a), b)
 
 
-print(convert(str(s), a, b))
+print(convert(str(number), old_system, new_system))

@@ -97,8 +97,6 @@ def check_timetable(user_message):
         return False
 
 
-
-
 def return_timetable(request, file_with_timetable):
     timetable = []
     day = 0
@@ -121,7 +119,10 @@ def return_timetable(request, file_with_timetable):
                 random_id=get_random_id(),
                 message= string)
     if request == True:
-        print("Чтобы бот выдал расписание, в сообщении должно быть слово слово расписание и день недели")
+        vk.messages.send(
+            user_id=event.obj.from_id,
+            random_id=get_random_id(),
+            message="Чтобы бот выдал расписание, в сообщении должно быть слово <<расписание>> и день недели, на который вы хотите узнать расписание.")
     if request == False:
         pass
 
@@ -150,6 +151,64 @@ def sport():
         message="Футбол: " + z + b + y)
 
 
+def calulator(user_message):
+    vk.messages.send(
+        user_id=event.obj.from_id,
+        random_id=get_random_id(),
+        message="Введите основание системы счисления:")
+    for eventx in longpoll.listen():  # вечно ждем новых сообщений
+        if eventx.type == VkBotEventType.MESSAGE_NEW:  # если сообщение пришло
+            if eventx.obj.text != '':  # и оно не пустое
+                if eventx.from_user:  # да еще и от пользователя
+                    user_sentx = eventx.obj.text  # возьмем его текст
+
+                    numerals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+                    l = [ "A", "B", "C", "D", "E", "F"]
+
+                    exit_code = 0
+                    for i in user_sentx:
+                        if i in numerals == False:
+                            vk.messages.send(
+                                user_id=eventx.obj.from_id,
+                                random_id=get_random_id(),
+                                message="Ошибка. В сообщении не число")
+                            exit_code = 1
+
+                    if int(user_sentx) > 16:
+                        vk.messages.send(
+                            user_id=eventx.obj.from_id,
+                            random_id=get_random_id(),
+                            message="Ошибка. Основание больше 16")
+                        exit_code = 1
+
+                    if exit_code == 1:
+                        break
+                    if exit_code == 0:
+                        base = int(user_sentx)
+                        vk.messages.send(
+                            user_id=eventx.obj.from_id,
+                            random_id=get_random_id(),
+                            message="Введите пример")
+                        for eventy in longpoll.listen():  # вечно ждем новых сообщений
+                            if eventy.type == VkBotEventType.MESSAGE_NEW:  # если сообщение пришло
+                                if eventy.obj.text != '':  # и оно не пустое
+                                    if eventy.from_user:  # да еще и от пользователя
+                                        user_senty = eventy.obj.text  # возьмем его текст
+
+
+
+                    for i in
+                        vk.messages.send(
+                            user_id=eventx.obj.from_id,
+                            random_id=get_random_id(),
+                            message="Привет, " + user_sent + ". Ты можешь узнать погоду, свое будущее или узнать результаты последнего спортивного матча")
+                        break
+
+
+
+
+
 # Обрабтка сообщений
 for event in longpoll.listen():  # вечно ждем новых сообщений
     if event.type == VkBotEventType.MESSAGE_NEW:  # если сообщение пришло
@@ -165,7 +224,7 @@ for event in longpoll.listen():  # вечно ждем новых сообщен
                         message=znak(user_sent))
                 elif proverka(user_sent) == 1:
                     send_pogoda()
-                elif user_sent == "Спорт":
+                elif user_sent == "Футбол":
                     sport()
                 elif check_timetable(user_sent) != False:
                     return_timetable(check_timetable(user_sent), 'timetable.txt')
