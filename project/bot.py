@@ -1,6 +1,7 @@
 import random
 import vk_api  # подключаем апи бота
 import requests  # подключим библиотеку requests
+import re
 from bs4 import BeautifulSoup  # и библиотеку BeautifulSoup
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.utils import get_random_id
@@ -162,48 +163,110 @@ def calulator(user_message):
                 if eventx.from_user:  # да еще и от пользователя
                     user_sentx = eventx.obj.text  # возьмем его текст
 
-                    numerals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                    numerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-                    l = [ "A", "B", "C", "D", "E", "F"]
+
+                    list_of_numerals_and_signs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                                                  "A", "B", "C", "D", "E", "F", "+", "-", "/", "*",
+                                                  "(", ")",]
+
 
                     exit_code = 0
                     for i in user_sentx:
-                        if i in numerals == False:
+                        if bool(i in numerals) == False:
                             vk.messages.send(
                                 user_id=eventx.obj.from_id,
                                 random_id=get_random_id(),
                                 message="Ошибка. В сообщении не число")
                             exit_code = 1
+                            break
 
-                    if int(user_sentx) > 16:
-                        vk.messages.send(
-                            user_id=eventx.obj.from_id,
-                            random_id=get_random_id(),
-                            message="Ошибка. Основание больше 16")
-                        exit_code = 1
+                    if exit_code == 0:
+                        if int(user_sentx) > 16 or int(user_sentx) < 2:
+                            vk.messages.send(
+                                user_id=eventx.obj.from_id,
+                                random_id=get_random_id(),
+                                message="Ошибка. Основание больше 16 или меньше 2")
+                            exit_code = 1
 
-                    if exit_code == 1:
-                        break
+
+
                     if exit_code == 0:
                         base = int(user_sentx)
                         vk.messages.send(
                             user_id=eventx.obj.from_id,
                             random_id=get_random_id(),
-                            message="Введите пример")
+                            message="Введите пример:")
                         for eventy in longpoll.listen():  # вечно ждем новых сообщений
                             if eventy.type == VkBotEventType.MESSAGE_NEW:  # если сообщение пришло
                                 if eventy.obj.text != '':  # и оно не пустое
                                     if eventy.from_user:  # да еще и от пользователя
                                         user_senty = eventy.obj.text  # возьмем его текст
 
+                                        exit_code = 0
+
+                                        for i in user_senty:
+                                            if bool(i in list_of_numerals_and_signs) == False:
+                                                exit_code = 1
+                                                vk.messages.send(
+                                                    user_id=eventy.obj.from_id,
+                                                    random_id=get_random_id(),
+                                                    message="Ошибка 1: данное выражение не подходит по формату.")
+                                                break
+
+                                        list_of_nice_numerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                                                                 "A", "B", "C", "D", "E", "F"]
+                                        list_of_nice_signs = ["+", "-", "/", "*", "(", ")"]
+
+                                        base_list = list_of_nice_numerals[:base]
+                                        print(base_list)
+
+                                        if exit_code == 0:
+
+                                            for i in user_senty:
+                                                if bool(i in base_list) == False:
+                                                    if bool(i in list_of_nice_signs) == False:
+                                                        print(bool(i in base_list))
+                                                        print(bool(i in list_of_nice_signs))
+                                                        print(i)
+                                                        exit_code = 1
+                                                        vk.messages.send(
+                                                            user_id=eventy.obj.from_id,
+                                                            random_id=get_random_id(),
+                                                            message="Ошибка 2: данное выражение не подходит по формату.")
+                                                        break
+
+                                        if exit_code == 0:
+                                            list_of_signs = []
+                                            list_of_numerals = []
+                                            result = ''
+                                            user_senty.split()
+                                            for i in range(len(user_senty)):
+                                                if user_senty[i] in list_of_nice_numerals:
+                                                    list_of_numerals.append([user_senty[i], i])
+                                                if user_senty[i] in list_of_nice_signs:
+                                                    list_of_signs.append([user_senty[i], i])
+                                            for i in range(len(user_senty)):
+                                                for j in list_of_numerals:
+                                                    if j[1] == i:
+                                                        result+= j[0]
+                                                        del j
+                                                        break
+                                                for k in list_of_signs:
+                                                    if k[1] == i:
+                                                        result+= k[0]
+                                                        del k
+                                                        break
+                                            result = eval(result)
+                                            vk.messages.send(
+                                                user_id=eventx.obj.from_id,
+                                                random_id=get_random_id(),
+                                                message=result)
 
 
-                    for i in
-                        vk.messages.send(
-                            user_id=eventx.obj.from_id,
-                            random_id=get_random_id(),
-                            message="Привет, " + user_sent + ". Ты можешь узнать погоду, свое будущее или узнать результаты последнего спортивного матча")
-                        break
+
+
+
 
 
 
@@ -217,6 +280,8 @@ for event in longpoll.listen():  # вечно ждем новых сообщен
                 user_sent = event.obj.text  # возьмем его текст
                 if user_sent == "ПРИВЕТ":  # если текст равен "ПРИВЕТ"
                     send_privet()
+                elif user_sent.lower() == "к":
+                    calulator(user_sent)
                 elif user_sent in zodiac:
                     vk.messages.send(
                         user_id=event.obj.from_id,
