@@ -1,9 +1,6 @@
 import string
 symbols = string.digits + string.ascii_uppercase
 
-number = input('Enter a number you need to convert: ')
-old_base = int(input('Enter old base: '))
-new_base = int(input('Enter new base: '))
 
 
 def convert(number, old_base, new_base, precision=None):
@@ -32,6 +29,5 @@ def convert(number, old_base, new_base, precision=None):
         return s
 
 
-print(convert(number, old_base, new_base))
 
 
