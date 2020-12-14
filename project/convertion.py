@@ -28,6 +28,6 @@ def convert(number, old_base, new_base, precision=None):
     else:
         return s
 
-
+print(convert("10", 2, 10, precision=None))
 
 

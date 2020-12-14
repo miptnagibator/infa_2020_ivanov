@@ -31,11 +31,13 @@ numerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 list_of_numerals_and_signs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                               "A", "B", "C", "D", "E", "F", "+", "-", "/", "*",
-                              "(", ")", ]
+                              "(", ")", "." ]
 
 list_of_nice_numerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                          "A", "B", "C", "D", "E", "F"]
-list_of_nice_signs = ["+", "-", "/", "*", "(", ")"]
+list_of_nice_signs = ["+", "-", "/", "*", "(", ")", "."]
+
+list_of_nice_latters = ["A", "B", "C", "D", "E", "F"]
 
 
 # Функции для обработки сообщений
@@ -176,6 +178,26 @@ def sport():
 
 
 def calulator():
+    '''
+    Функция включает режим калькулятора.
+    Функция обрабатывает сообщения пользователя.
+    Сначала принимается система (от 2 до 16),
+    потом арифметическое выражение, выполняется его парсеринг,
+    перевод каждого числа в 10 систему, выполнение данного выражения,
+    перевод его в изначальную систему и вывод результата.
+    Проработана система ошибок:
+    Ошибка 1: при вводе основания системы.
+        Ошибка 1.1: В сообщении встречается не число,
+            а набор недопустимых символов.
+        Ошибка 1.2: Введенное основание больше 16 или меньше 2.
+    Ошибка 2: при вводе выражения.
+        Ошибка 2.1: Данное выражение содержит недопустимые символы.
+        Ошибка 2.2: Данное выражение содержит цифры не для осования, введенного ранее.
+        Ошибка 2.3: Данное выражение содержит арифметическую ошибку
+            (деление на 0, неправильную постановку знаков арифметических действий).
+    Для возвращения на шаг назад нужно ввести слово <<назад>>.
+    :return: None
+    '''
     send_massage("Введите основание системы счисления:", event)
     for eventx in longpoll.listen():  # вечно ждем новых сообщений
         if eventx.type == VkBotEventType.MESSAGE_NEW:  # если сообщение пришло
@@ -239,32 +261,42 @@ def calulator():
                                                             eventy)
                                                         break
 
-                                        if exit_code == 0:
-                                            try:
-                                                eval(user_senty)
-                                            except:
-                                                exit_code = 1
-                                                send_massage(
-                                                    "Ошибка 2.3: данное выражение содержит арифметическую ошибку.",
-                                                    eventy)
+
 
                                         if exit_code == 0:
                                             list_of_signs = []
                                             list_of_numerals = []
                                             result = ''
                                             user_senty.split()
+                                            print(user_senty)
                                             for i in range(len(user_senty)):
                                                 if user_senty[i] in list_of_nice_numerals:
                                                     list_of_numerals.append([user_senty[i], i])
                                                 if user_senty[i] in list_of_nice_signs:
                                                     list_of_signs.append([user_senty[i], i])
 
-                                            for i in range(len(list_of_numerals)):
-                                                list_of_numerals[i][0] = convert(float(list_of_numerals[i][0]), base,
-                                                                                 10)
+                                            print(list_of_numerals)
+                                            list_of_true_numerals = []
+                                            nomber = -1
+                                            numeral = ""
+                                            for i in list_of_numerals:
+                                                if i[1] == nomber + 1:
+                                                    numeral += i[0]
+                                                    nomber += 1
+                                                elif i[1] != nomber + 1:
+                                                    list_of_true_numerals.append([numeral, nomber])
+                                                    nomber = i[1]
+                                                    numeral = i[0]
+                                            list_of_true_numerals.append([numeral, nomber])
+                                            print(list_of_true_numerals)
+
+                                            for i in range(len(list_of_true_numerals)):
+                                                list_of_true_numerals[i][0] = convert(list_of_true_numerals[i][0], base,
+                                                                                      10)
+                                            print(list_of_true_numerals)
 
                                             for i in range(len(user_senty)):
-                                                for j in list_of_numerals:
+                                                for j in list_of_true_numerals:
                                                     if j[1] == i:
                                                         result += j[0]
                                                         del j
@@ -274,13 +306,21 @@ def calulator():
                                                         result += k[0]
                                                         del k
                                                         break
-                                            result = eval(result)
-                                            result = convert(result, 10, base)
-                                            vk.messages.send(
-                                                user_id=eventy.obj.from_id,
-                                                random_id=get_random_id(),
-                                                message=result)
-                                            send_massage(result, eventy)
+                                            print(result)
+                                            try:
+                                                eval(result)
+                                            except:
+                                                exit_code = 1
+                                                send_massage(
+                                                    "Ошибка 2.3: данное выражение содержит арифметическую ошибку.",
+                                                    eventy)
+                                            if exit_code == 0:
+                                                result = eval(result)
+                                                result = convert(str(result), 10, base)
+                                                result.split()
+                                                if result[0] == ".":
+                                                    result = "0" + result
+                                                send_massage(result, eventy)
 
                                         if exit_code == 2:
                                             send_massage("Введите новую систему счисления:", eventy)
