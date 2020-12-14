@@ -22,7 +22,7 @@ def convert(number, old_base, new_base, precision=None):
 
     # from decimal to new base
     precision = len(fractional) if precision is None else precision
-    s = _int_to_base(int(round(num / new_base ** -precision)), new_base)
+    s = _int_to_base(int(num / new_base ** -precision), new_base)
     if precision:
         return s[:-precision] + '.' + s[-precision:]
     else:
