@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.utils import get_random_id
 
-token = "31708ce0fc77f37c8e4b0ec34e8a942f965d5cb3fb421ef46df05f41c52ec261f416e390c99c9f0d24cd0"
+token = ""
 
 # подключаемся к сообществу
 vk_session = vk_api.VkApi(token=token)
